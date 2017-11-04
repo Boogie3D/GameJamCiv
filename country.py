@@ -8,9 +8,10 @@ class Country:
     count = 4
     relationships = init.init_relationships()
 
-    def __init__(self, name):
+    def __init__(self, name, identity):
         "Initialize country's resources."
         self.name = name
+        self.identity = identity
         self.resources = init.init_resources()
 
     def attack(self, target):
@@ -24,9 +25,8 @@ class Country:
         damage = floor(random.lognormvariate(1, 0.5))
         industry_drain = damage * 3 // 2
         if industry_drain > self.resources['industry']:
-            self.resources['industry'] = 0
-        else:
-            self.resources['industry'] -= industry_drain
+            industry_drain = self.resources['industry']
+        self.resources['industry'] -= industry_drain
         target.resources['population'] -= damage
         if damage == 0:
             # Randomized statements
@@ -52,6 +52,7 @@ class Country:
             print('{0} thousand were killed!'.format(damage))
         else:
             print('A devastating nuclear attack! {0} thousand were wiped out!!!'.format(damage))
+        print('{0} tons of industrial resources were used.'.format(industry_drain))
 
     def dual_attack(self, ally, target):
         'Country proposes dual attack on another country.'

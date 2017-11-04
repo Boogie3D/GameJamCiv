@@ -16,11 +16,11 @@ def main():
     welcome()
     country_names = ask_names()
     # Initalize countries and player
-    player = country.Player('You')
-    country_a = country.Computer(country_names[0])
-    country_b = country.Computer(country_names[1])
-    country_c = country.Computer(country_names[2])
-    country_d = country.Computer(country_names[3])
+    player = country.Player('You', 'P')
+    country_a = country.Computer(country_names[0], 'A')
+    country_b = country.Computer(country_names[1], 'B')
+    country_c = country.Computer(country_names[2], 'C')
+    country_d = country.Computer(country_names[3], 'D')
     del country_names
     # Game should start here
 

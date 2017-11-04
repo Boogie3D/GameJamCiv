@@ -27,28 +27,21 @@ def init_relationships():
     '''
 
     seed()
-
     relationships = {}
-
     # Computer relationships
-    for comb in combinations("ABCD", 2):
+    for comb in combinations('ABCD', 2):
         relationships[comb] = randint(25, 75)
     # Player-Computer relationships
     while True:
-        relationships['p-a'] = randint(25, 75)
-        relationships['p-b'] = randint(25, 75)
-        relationships['p-c'] = randint(25, 75)
-        relationships['p-d'] = randint(25, 75)
-        # Count the number of initial allies
-        # Retry initialization if the win condition is
-        # prematurely satisfied
-        ally_count = ((relationships['p-a'] > 60)
-                      + (relationships['p-b'] > 60)
-                      + (relationships['p-c'] > 60)
-                      + (relationships['p-d'] > 60))
+        for let in 'ABCD':
+            relationships[let + 'P'] = randint(25, 75)
+            # Count the number of initial allies
+            # Retry initialization if the win condition is
+            # prematurely satisfied
+            ally_count = 0
+            ally_count += (relationships[let + 'P'] > 60)
         if ally_count < 3:
             break
-
     return relationships
 
 def welcome():
@@ -114,5 +107,4 @@ def ask_names():
             # Try again if empty string
             del names[index]
             print('Please try again.')
-
     return names
