@@ -1,6 +1,7 @@
 'Functions for initializing game'
 
 from random import seed, randint
+from itertools import combinations
 
 def init_resources():
     '''
@@ -30,13 +31,8 @@ def init_relationships():
     relationships = {}
 
     # Computer relationships
-    relationships['a-b'] = randint(25, 75)
-    relationships['a-c'] = randint(25, 75)
-    relationships['a-d'] = randint(25, 75)
-    relationships['b-c'] = randint(25, 75)
-    relationships['b-d'] = randint(25, 75)
-    relationships['c-d'] = randint(25, 75)
-
+    for comb in combinations("ABCD", 2):
+        relationships[comb] = randint(25, 75)
     # Player-Computer relationships
     while True:
         relationships['p-a'] = randint(25, 75)
@@ -108,26 +104,15 @@ countries.
 
 def ask_names():
     'Asks the player to enter names for the other countries'
-    names = {}
-    while True:
-        names['A'] = input("Enter the first country's name: ")
-        if names['A'] != '':
-            break
-        print('Please try again.')
-    while True:
-        names['B'] = input("Enter the second country's name: ")
-        if names['B'] != '':
-            break
-        print('Please try again.')
-    while True:
-        names['C'] = input("Enter the third country's name: ")
-        if names['C'] != '':
-            break
-        print('Please try again.')
-    while True:
-        names['D'] = input("Enter the fourth country's name: ")
-        if names['D'] != '':
-            break
-        print('Please try again.')
+    names = []
+    numeral = ['first', 'second', 'third', 'fourth']
+    for index in range(4):
+        while True:
+            names.append(input("Enter the {0} country's name: ".format(numeral[index])))
+            if names[index] != '':
+                break
+            # Try again if empty string
+            del names[index]
+            print('Please try again.')
 
     return names

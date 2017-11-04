@@ -22,6 +22,11 @@ class Country:
         random.seed()
         # Damage mostly 1-3, theoretical range is 0-12
         damage = floor(random.lognormvariate(1, 0.5))
+        industry_drain = damage * 3 // 2
+        if industry_drain > self.resources['industry']:
+            self.resources['industry'] = 0
+        else:
+            self.resources['industry'] -= industry_drain
         target.resources['population'] -= damage
         if damage == 0:
             # Randomized statements
@@ -34,9 +39,9 @@ class Country:
             print(random.choice(statement), end=' ')
             print('No one was killed.')
         elif damage <= 4:
-            print('{0} attacked {1}! \
-                  {2} thousand were killed!'.format(self.name, target.name,
-                                                    damage))
+            print('{0} attacked {1}! {2} thousand were killed!'.format(self.name,
+                                                                       target.name,
+                                                                       damage))
         elif damage <= 8:
             # Randomized statements
             statement = [
@@ -46,12 +51,18 @@ class Country:
             print(random.choice(statement), end=' ')
             print('{0} thousand were killed!'.format(damage))
         else:
-            print('A devastating nuclear attack! \
-                  {0} thousand were wiped out!!!'.format(damage))
+            print('A devastating nuclear attack! {0} thousand were wiped out!!!'.format(damage))
 
     def dual_attack(self, ally, target):
         'Country proposes dual attack on another country.'
-        pass
+        if self.name == 'You':
+            print('You propose to attack {0} with {1}'.format(target.name,
+                                                              ally.name))
+        else:
+            if target.name == 'You':
+                pass
+            else:
+                pass
 
     def trade(self, target):
         'Country proposes a trade.'
