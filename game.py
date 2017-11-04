@@ -15,6 +15,8 @@ def main():
     'Main'
     welcome()
     countries = ask_names()
+    # Initalize countries and player
+    player = country.Player('You')
     country_a = country.Computer(countries['A'])
     country_b = country.Computer(countries['B'])
     country_c = country.Computer(countries['C'])
