@@ -20,6 +20,7 @@ def main():
     country_c = country.Computer(countries['C'])
     country_d = country.Computer(countries['D'])
     del countries
+    # Game should start here
 
     return 0
 
