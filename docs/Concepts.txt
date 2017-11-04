@@ -1,0 +1,82 @@
+Name: Work-In-Progress
+
+Idea:
+Civ. clone, make allies/enemies, blow countries up, etc.
+
+Win condition:
+Be allied with over half the REMAINING world.
+
+Countries:
+There are currently at least 5 countries.
+Alignments are randomized.
+Resources are randomized.
+Some countries have advantageous resources or intimidating weapons.
+Leaders may or may not be people (like Ybrik).
+One country is actually chaotic evil ?
+
+Resources:
+Need resources to perform some actions such as attacking countries.
+Resources passively gained.
+Resource trading.
+
+List of resources:
+- People
+        - Population can be from 1 thousand to 100 thousand
+        - Initialized randomly from 30-60 thousand
+- Food
+- Industrial/Science
+
+Trading:
+Trade with other countries for resources.
+Trading and charity add to friendship.
+Charity counts more than trading.
+
+Diplomacy:
+Learn about other countries:
+        - Allies
+        - Resources
+Propose dual attack
+
+Alignments:
+Countries can be allies, neutral, or enemies.
+Friendship points decide allies/enemies.
+Allies can be gained by charity.
+List of allies is provided.
+Relations are mutual.
+
+Relationship Ranges:
+Total range: 0-100
+Enemies: 0-39
+Neutral: 40-60
+Friends: 61-100
+
+Turns:
+Perform actions on your turn.
+Performing an action ends turns.
+Gain resources on your turn.
+
+Actions:
+- Trade
+- Diplomacy
+- Attack
+- Gain extra resources
+- See status (until there are graphics)
+- Quit
+
+Difficulty:
+Relations are not static. Allying with certain countries can make other
+countries like/hate you.
+
+Statistics:
+Friendships (based off friendship points)
+Awareness (based off power)
+Resources (gained passively, by gathering, or by trading)
+Power (scaled sum of all resources, mutually known)
+Trade willingness ?
+Ghandi tendency ?
+
+Technical Details:
+Plays kind of like a board game (there are turns).
+May have graphics if there's time.
+There will probably be some AI.
+Populations are like health bars.
