@@ -42,6 +42,7 @@ class Computer(Country):
     'Class for the computer country'
     def __init__(self, name):
         'Player chooses a name for each country.'
+        super().__init__()
         self.name = name
 
     def take_turn(self):
