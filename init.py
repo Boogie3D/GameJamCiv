@@ -4,14 +4,15 @@ from random import seed, randint
 
 def init_resources():
     '''
-    Initializes the statistics for a country, such as population, food, and \
-    industry
+    Initializes the statistics for a country, such as population, food,
+    and industry
     '''
     seed()
-    resources = {}
-    resources['population'] = randint(30, 60)
-    resources['food'] = 60
-    resources['industry'] = 0
+    resources = {
+        'population': randint(30, 60),
+        'food': 60,
+        'industry': 0
+    }
 
     return resources
 
@@ -20,40 +21,67 @@ def init_relationships():
     seed()
     relationships = {}
     while True:
-        relationships['p_a'] = randint(25, 75)
-        relationships['p_b'] = randint(25, 75)
-        relationships['p_c'] = randint(25, 75)
-        relationships['p_d'] = randint(25, 75)
-        if relationships['p_a'] + relationships['p_b'] + relationships['p_c'] < 182 and \
-        relationships['p_a'] + relationships['p_b'] + relationships['p_d'] < 182 and \
-        relationships['p_a'] + relationships['p_c'] + relationships['p_d'] < 182 and \
-        relationships['p_b'] + relationships['p_c'] + relationships['p_d'] < 182:
+        relationships['p-a'] = randint(25, 75)
+        relationships['p-b'] = randint(25, 75)
+        relationships['p-c'] = randint(25, 75)
+        relationships['p-d'] = randint(25, 75)
+        # Count the number of initial allies
+        # Retry initialization if the win condition is
+        # prematurely satisfied
+        ally_count = ((relationships['p-a'] > 60)
+                      + (relationships['p-b'] > 60)
+                      + (relationships['p-c'] > 60)
+                      + (relationships['p-d'] > 60))
+        if ally_count < 3:
             break
-    relationships['a_b'] = randint(25, 75)
-    relationships['a_c'] = randint(25, 75)
-    relationships['a_d'] = randint(25, 75)
-    relationships['b_c'] = randint(25, 75)
-    relationships['b_d'] = randint(25, 75)
-    relationships['c_d'] = randint(25, 75)
+    relationships['a-b'] = randint(25, 75)
+    relationships['a-c'] = randint(25, 75)
+    relationships['a-d'] = randint(25, 75)
+    relationships['b-c'] = randint(25, 75)
+    relationships['b-d'] = randint(25, 75)
+    relationships['c-d'] = randint(25, 75)
 
     return relationships
 
 def welcome():
     'Displays a welcome message and the game instructions.'
-    print('Welcome to GAME!')
-    print('You are the leader of a country.')
-    print('There are four other countries.')
-    print('You can become allies or enemies with any of the four countries.')
-    print('Each country has a number of resources.')
-    print('''Each country takes a turn and can perform one of the following
-          actions:''')
-    print('Trade: Trade resources with another country.')
-    print('Attack: Attack another country.')
-    print('''Dual Attack: Propose a dual attack with an allied country on
-          another country.''')
-    print('Gather: Gather additional resources.')
-    print('''To win, become allies with more than half of the remaining
-          countries.''')
+    print('''
+          Welcome to GAME!
+          You are the leader of a great country in a tiny world.
+          There are only four other countries on this planet.
+          You may become allies or enemies with any of these four countries.
+
+          Each country has a number of resources:
+          Population: The manpower of a country (very important)
+          Food: Substinence for a country's people. If food runs low, the
+          population will begin to dwindle.
+          Industry: The strength of a country's industry determines whether
+          it is capable of attacking or defending itself.
+
+          Resources may passively increase or decrease at the beginning of
+          each round.
+          If a country's population drops to 0, it is permanently destroyed.
+          ''')
+
+    input('<Press Enter to continue>')
+
+    print('''
+          Each surviving country will take a turn and may perform one of the
+          following actions:
+          Trade: Trade resources with another country.
+          Attack: Attack another country.
+          Dual Attack: Propose a dual attack with an allied country on another
+          country.
+          Gather: Gather additional resources.
+
+          The following command is unique to the player:
+          Check Status: List the number of resources owned and the countries
+          that are allied with you.
+
+          To win, become allies with more than half of the remaining
+          countries.
+          ''')
+
 def ask_names():
     'Asks the player to enter names for the other countries'
     names = {}
