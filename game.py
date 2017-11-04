@@ -14,5 +14,7 @@ def main():
     country_c = country.Computer(countries['C'])
     country_d = country.Computer(countries['D'])
 
+    return 0
+
 if __name__ == '__main__':
     exit(main())
