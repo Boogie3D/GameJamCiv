@@ -1,7 +1,6 @@
 'Functions for initializing game'
 
-from random import seed
-from random import randint
+from random import seed, randint
 
 def init_resources():
     '''
