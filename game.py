@@ -9,8 +9,7 @@ except ImportError as exc:
     exit(1)
 
 import country
-from init import ask_names
-from init import welcome
+from init import ask_names, welcome
 
 def main():
     'Main'

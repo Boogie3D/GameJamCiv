@@ -32,6 +32,7 @@ class Player(Country):
     def take_turn(self):
         'Player takes his/her turn.'
         pass
+
     def check_status(self):
         '''
         Player checks his/her status in the game, displaying each country's \
