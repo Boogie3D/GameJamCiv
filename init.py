@@ -25,10 +25,10 @@ def init_relationships():
         relationships['p_b'] = randint(25, 75)
         relationships['p_c'] = randint(25, 75)
         relationships['p_d'] = randint(25, 75)
-        if relationships['p_a'] + relationships['p_b'] + relationships['p_c'] < 180 and \
-        relationships['p_a'] + relationships['p_b'] + relationships['p_d'] < 180 and \
-        relationships['p_a'] + relationships['p_c'] + relationships['p_d'] < 180 and \
-        relationships['p_b'] + relationships['p_c'] + relationships['p_d'] < 180:
+        if relationships['p_a'] + relationships['p_b'] + relationships['p_c'] < 182 and \
+        relationships['p_a'] + relationships['p_b'] + relationships['p_d'] < 182 and \
+        relationships['p_a'] + relationships['p_c'] + relationships['p_d'] < 182 and \
+        relationships['p_b'] + relationships['p_c'] + relationships['p_d'] < 182:
             break
     relationships['a_b'] = randint(25, 75)
     relationships['a_c'] = randint(25, 75)
