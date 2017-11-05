@@ -97,11 +97,16 @@ class Player(Country):
             while True:
                 print('Who will you attack?')
                 self.__print_countries__()
-                player_input = input('>> ')
-                if player_input in ('1', '2', '3', '4'):
+                try:
+                    player_input = int(input('>> ')) - 1
+                except ValueError:
+                    print('Invalid input.')
+                    continue
+                if player_input in range(self.__comp_count__):
                     break
                 print('Invalid choice.')
-            country_choice = self.__countries__[int(player_input)]
+            country_identity = sorted(list(self.__countries__.keys()))[player_input]
+            country_choice = self.__countries__[country_identity]
             self.attack(country_choice)
             self.__relationship_bound__(country_choice)
         # Dual Attack
@@ -125,7 +130,7 @@ class Player(Country):
                     break
                 print('Invalid choice.')
             country_list = [c for c in sorted(list(self.__countries__.keys()))
-                            if c != 'P']
+                            if 'P' not in c]
             country_target = self.__countries__[country_list[player_target - 1]]
             while True:
                 print('Who will join you?')
@@ -305,7 +310,7 @@ class Player(Country):
 
     def attack(self, target):
         'Country attacks another country.'
-        print('You are attacking {1}!'.format(target.name))
+        print('You are attacking {0}!'.format(target.name))
         seed()
         # Damage mostly 1-3, theoretical range is 0-12
         damage = int(lognormvariate(1, 0.5))
@@ -319,20 +324,20 @@ class Player(Country):
         if damage == 0:
             # Randomized statements
             statement = [
-                'You tried to attack {1}, but failed!'.format(target.name),
+                'You tried to attack {0}, but failed!'.format(target.name),
                 '{0} saw it coming a mile away!'.format(target.name),
                 'A spy has warned {0} of your attack!'.format(target.name)
             ]
             print(choice(statement), end=' ')
             print('No one was killed.')
         elif damage <= 4:
-            print('You attacked {1}! {2} thousand were killed!'.format(target.name,
+            print('You attacked {0}! {1} thousand were killed!'.format(target.name,
                                                                        damage))
         elif damage <= 8:
             # Randomized statements
             statement = [
-                'You launched missiles at {1}!'.format(target.name),
-                'You surprise-attacked {1}!'.format(target.name),
+                'You launched missiles at {0}!'.format(target.name),
+                'You surprise-attacked {0}!'.format(target.name),
             ]
             print(choice(statement), end=' ')
             print('{0} thousand were killed!'.format(damage))

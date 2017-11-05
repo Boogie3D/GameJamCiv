@@ -58,7 +58,7 @@ class Computer(Country):
             choices.append('gather')
             choices.append('gather')
 
-        countries_list = list(self.__countries__.values())
+        countries_list = self.__countries__.values()
         action = choice(choices)
         # Trade
         if action == 'trade':
@@ -155,7 +155,7 @@ class Computer(Country):
             statement = [
                 '{0} ordered the diplomat away.'.format(target.name),
                 'He mysteriously disappeared.',
-                'He got lynched.'
+                'He got lynched.',
                 'She defected to {0}.'.format(target.name),
                 'She was never seen again.'
             ]
