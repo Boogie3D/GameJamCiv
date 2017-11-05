@@ -51,7 +51,7 @@ def init_names():
         while True:
             names.append(input("Enter the {0} country's name: ".format(numeral[index])))
             # Try again if invalid string
-            if names[index] != '' and names[index] != 'You':
+            if names[index] != '' and names[index] not in names[0:index - 1]:
                 break
             del names[index]
             print('Please try again.')

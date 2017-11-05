@@ -8,42 +8,49 @@ except ImportError as exc:
     print('i.e. [sudo] pip install {0}'.format(exc.name))
     exit(1)
 
-import country
+import countrycpu
+import countryplayer
 from init import init_names
 
 def main():
-    'Main'
+    'Runtime function for game.'
     welcome()
     country_names = init_names()
     print('')
     # Initalize countries and player
-    player = country.Player('You', 'P')
-    country_a = country.Computer(country_names[0], 'A')
-    country_b = country.Computer(country_names[1], 'B')
-    country_c = country.Computer(country_names[2], 'C')
-    country_d = country.Computer(country_names[3], 'D')
+    player = countryplayer.Player('You', 'P')
+    country_a = countrycpu.Computer(country_names[0], 'A')
+    country_b = countrycpu.Computer(country_names[1], 'B')
+    country_c = countrycpu.Computer(country_names[2], 'C')
+    country_d = countrycpu.Computer(country_names[3], 'D')
     countries = [player, country_a, country_b, country_c, country_d]
     # Game should start here
     player.check_status()
     running = True
     while running:
         for active in countries:
+            status = 'init'
             while True:
-                print(player.__comp_count__)
-                status = active.take_turn()
+                status = active.take_turn(status)
                 if status != 'retry':
                     break
+            if status == 'quit':
+                running = False
+                print('Goodbye.')
+                break
             if active == player and status == 'dead':
                 lose()
                 running = False
-            if active != player and status == 'dead':
-                active.die()
-            if (player.__comp_count__ == 0
-                    or player.allies_count > player.__comp_count__ // 2):
+                break
+            elif (player.__comp_count__ == 0
+                  or player.allies_count() > player.__comp_count__ // 2):
                 win()
                 running = False
-            if active != player:
-                input('<Press Enter to continue')
+                break
+            if active != player and status == 'dead':
+                active.die()
+            input('<Press Enter to continue>')
+    input('<Press Enter to continue>')
     return 0
 
 def welcome():
@@ -66,9 +73,11 @@ population will begin to dwindle.
 Industry: The strength of a country's industry determines whether
 it is capable of attacking or defending itself.
 
-Resources may passively increase or decrease at the beginning of
-each round.
+Resources will always passively increase of each round, with the exception of
+the population, which will decrease if food is too low.
+
 If a country's population drops to 0, it is permanently destroyed.
+If your population drops to 0, you lose.
 ''')
 
     input('<Press Enter to continue>')
