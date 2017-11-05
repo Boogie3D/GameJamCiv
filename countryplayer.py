@@ -115,8 +115,8 @@ class Player(Country):
                 print('Not enough industrial resources.')
                 return 'retry'
             allies_list = self.__get_allies_list__()
-            if len(allies_list) < 2:
-                print('You do not have enough allies.')
+            if self.allies_count() == 0:
+                print('You are alone in this world.')
                 return 'retry'
             while True:
                 print('Who will you attack?')
@@ -131,7 +131,7 @@ class Player(Country):
                 print('Invalid choice.')
             country_list = [c for c in sorted(list(self.__countries__.keys()))
                             if 'P' not in c]
-            country_target = self.__countries__[country_list[player_target - 1]]
+            country_target = self.__countries__[country_list[player_target]]
             while True:
                 print('Who will join you?')
                 for ally in allies_list:
@@ -141,6 +141,8 @@ class Player(Country):
                 except ValueError:
                     print('Invalid input.')
                     continue
+                if player_ally in range(self.allies_count()):
+                    break
                 print('Invalid choice.')
             ally_name = allies_list[player_ally]
             for country_value in self.__countries__.values():
@@ -148,7 +150,7 @@ class Player(Country):
                     country_ally = country_value
                     break
             if country_target == country_ally:
-                print("A country can't help you attack it.")
+                print("A country can't help you attack itself.")
                 return 'retry'
             self.dual_attack(country_ally, country_target)
             self.__relationship_bound__(country_ally)

@@ -95,7 +95,7 @@ class Computer(Country):
         if action == 'dual attack':
             if self.resources['industry'] < 30:
                 return 'retry'
-            if len(self.__get_allies_list__()) < 2:
+            if not self.__get_allies_list__():
                 return 'retry'
             ally_name = choice(self.__get_allies_list__())
             attack_name = choice(self.__get_enemies_list__())
