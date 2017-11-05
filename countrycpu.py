@@ -58,7 +58,7 @@ class Computer(Country):
             choices.append('gather')
             choices.append('gather')
 
-        countries_list = sorted(list(self.__countries__.values()))
+        countries_list = list(self.__countries__.values())
         action = choice(choices)
         # Trade
         if action == 'trade':

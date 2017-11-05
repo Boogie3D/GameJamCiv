@@ -65,6 +65,9 @@ class Country:
         'Returns ally count for a country.'
         return len(self.__get_allies_list__())
 
+    def get_name_from_id(self, identity):
+        'Returns the name of a country from its ID.'
+        return self.__countries__[identity].name
 
 def identity_key(country1, country2):
     "Returns a key for the 'relationships' dict."
