@@ -257,6 +257,7 @@ class Player(Country):
             if player_input in ('1', '2', '3', '4', '5', '6', '7', '8'):
                 break
             print('Invalid choice.')
+        # Trade
         if player_input == '1':
             while True:
                 print('Who will you trade with?')
@@ -271,7 +272,7 @@ class Player(Country):
                 self.relationships[gameutils.identity_key(self, country_choice)] = 100
             elif self.relationships[gameutils.identity_key(self, country_choice)] < 0:
                 self.relationships[gameutils.identity_key(self, country_choice)] = 0
-
+        # Diplomacy
         elif player_input == '2':
             while True:
                 print('Where will you send your diplomat?')
@@ -286,10 +287,10 @@ class Player(Country):
                 self.relationships[gameutils.identity_key(self, country_choice)] = 100
             elif self.relationships[gameutils.identity_key(self, country_choice)] < 0:
                 self.relationships[gameutils.identity_key(self, country_choice)] = 0
-
+        # Gather Resources
         elif player_input == '3':
             self.gather()
-
+        # Charity
         elif player_input == '4':
             while True:
                 print('Who will you give to?')
@@ -304,6 +305,7 @@ class Player(Country):
                 self.relationships[gameutils.identity_key(self, country_choice)] = 100
             elif self.relationships[gameutils.identity_key(self, country_choice)] < 0:
                 self.relationships[gameutils.identity_key(self, country_choice)] = 0
+        # Attack
         elif player_input == '5':
             while True:
                 print('Who will you attack?')
@@ -318,6 +320,7 @@ class Player(Country):
                 self.relationships[gameutils.identity_key(self, country_choice)] = 100
             elif self.relationships[gameutils.identity_key(self, country_choice)] < 0:
                 self.relationships[gameutils.identity_key(self, country_choice)] = 0
+        # Dual Attack
         elif player_input == '6':
             allies_list = gameutils.get_allies_list(self)
             if not allies_list:
@@ -326,15 +329,34 @@ class Player(Country):
             while True:
                 print('Who will you attack?')
                 gameutils.print_countries(self)
-                player_attack = input('>> ')
-                if player_attack in ('1', '2', '3', '4'):
+                player_target = input('>> ')
+                if player_target in ('1', '2', '3', '4'):
                     break
                 print('Invalid choice.')
-            country_attack = countries[int(player_attack)]
+            country_target = countries[int(player_target)]
             while True:
                 print('Who will join you?')
                 for ally in allies_list:
-                    print('({0}) {1}'.format(allies_list.index(ally), ally))
+                    print('({0}) {1}'.format(allies_list.index(ally) + 1, ally))
+                player_ally = input('>> ')
+                if player_ally in [str(x) for x in range(1, len(allies_list))]:
+                    break
+                print('Invalid choice.')
+            for country in countries:
+                if allies_list[int(player_ally)] == country.name:
+                    country_ally = country
+            if country_target == country_ally:
+                print("A country can't help you attack itself.")
+                return 'retry'
+            self.dual_attack(country_ally, country_target)
+        # Check Status
+        elif player_input == '7':
+            self.check_status()
+            return 'retry'
+        # Quit
+        elif player_input == '8':
+            return 'quit'
+        return 'alive'
 
     def diplomacy(self, target):
         'Learn something about another country.'
