@@ -88,7 +88,7 @@ class Computer(Country):
                 return 'retry'
             attack_list = [c for c in countries_list if c.name not in allies_list
                            and c.name != self.name]
-            attack_target = choice(self.__get_enemies_list__())
+            attack_target = choice(attack_list)
             self.attack(attack_target)
             self.__relationship_bound__(attack_target)
         # Dual Attack
