@@ -49,7 +49,9 @@ class Country:
             self.__relationships__[key] = 0
 
     def __passive_gather__(self):
-        pop_gain = randint(1, 3) * (-1 if self.resources['food'] < 10 else 1)
+        pop_gain = randint(1, 3)
+        if self.resources['food'] < 10:
+            pop_gain = -pop_gain - randint(3, 5)
         food_gain = randint(1, 7)
         industry_gain = randint(3, 10)
         self.resources['population'] += pop_gain

@@ -170,10 +170,10 @@ class Player(Country):
     def trade(self, target):
         'Country proposes a trade.'
         types = ['food', 'industry']
-        print('What do you want to trade?')
-        print('(1) Food')
-        print('(2) Industrial Resources')
         while True:
+            print('What do you want to trade?')
+            print('(1) Food')
+            print('(2) Industrial Resources')
             try:
                 send_input = int(input('>> '))
             except ValueError:
@@ -279,10 +279,10 @@ class Player(Country):
     def charity(self, target):
         'Give a country a gift.'
         types = ['food', 'industry']
-        print('What will you give?')
-        print('(1) Food')
-        print('(2) Industrial Resources')
         while True:
+            print('What will you give?')
+            print('(1) Food')
+            print('(2) Industrial Resources')
             try:
                 send_input = int(input('>> '))
             except ValueError:
