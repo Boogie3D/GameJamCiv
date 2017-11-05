@@ -99,7 +99,7 @@ class Computer(Country):
                 return 'retry'
             ally_name = choice(self.__get_allies_list__())
             attack_name = choice(self.__get_enemies_list__())
-            for key, value in self.__countries__.items():
+            for value in self.__countries__.values():
                 if ally_name == value.name:
                     ally_target = value
                 if attack_name == value.name:

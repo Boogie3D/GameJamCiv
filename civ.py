@@ -59,7 +59,7 @@ def main():
                 break
             elif (player.__comp_count__ == 0
                   or player.allies_count() > player.__comp_count__ // 2):
-                win()
+                win(player.__comp_count__)
                 running = False
                 break
             input('<Press Enter to continue>')
@@ -134,10 +134,17 @@ countries.
 
     print('')
 
-def win():
+def win(remaining):
     'Subroutines for winning a game'
-    print('''
+    if remaining:
+        print('''
 What a humanitarian! You've united half the world!
+
+Congratulations! You win!
+''')
+    if not remaining:
+        print('''
+Wow, you've achieved world peace (by killing everyone)!
 
 Congratulations! You win!
 ''')
