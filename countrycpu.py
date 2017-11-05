@@ -113,8 +113,8 @@ class Computer(Country):
         self_target_key = identity_key(self, target)
 
         send_quant = randint(1, send_max)
-        rec_quant = randint(max(1, send_max - randint(3, 10)),
-                            min(rec_max, send_max + randint(3, 10)))
+        radius = max(0, min(rec_max(randint(-5, 5))))
+        rec_quant = send_quant + radius
 
         if target.identity == 'P':
             while True:
