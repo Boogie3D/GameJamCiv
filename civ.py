@@ -28,6 +28,7 @@ def main():
     player.check_status()
     running = True
     month = 0
+    kill = None
     while running:
         print('Month {0}: '.format(month))
         for active in countries:
@@ -36,28 +37,29 @@ def main():
                 status = active.take_turn(status)
                 if status != 'retry':
                     break
-            if status == 'quit':
-                running = False
-                print('Goodbye.')
+            if status == 'dead':
+                print('The nation of {0} has perished'.format(active.name))
+                active.die()
+                del countries[countries.index(active)]
                 break
+            for cpu in countries[1:]:
+                if cpu.resources['population'] <= 0:
+                    print('The nation of {0} has perished.'.format(cpu.name))
+                    cpu.die()
+                    del countries[countries.index(cpu)]
             if active == player and status == 'dead':
                 lose()
                 running = False
+                break
+            if status == 'quit':
+                running = False
+                print('Goodbye.')
                 break
             elif (player.__comp_count__ == 0
                   or player.allies_count() > player.__comp_count__ // 2):
                 win()
                 running = False
                 break
-            if status == 'dead':
-                print('The nation of {0} has perished'.format(active.name))
-                active.die()
-                del countries[countries.index(active)]
-            for cpu in countries[1:]:
-                if cpu.resources['population'] <= 0:
-                    print('The nation of {0} has perished.'.format(cpu.name))
-                    cpu.die()
-                    del countries[countries.index(cpu)]
             input('<Press Enter to continue>')
             print('')
         month += 1

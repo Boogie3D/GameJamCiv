@@ -315,7 +315,7 @@ class Player(Country):
         print('You are attacking {0}!'.format(target.name))
         seed()
         # Damage mostly 1-3, theoretical range is 0-12
-        damage = int(lognormvariate(1, 0.5))
+        damage = int(lognormvariate(2, 0.4))
         # This may change
         industry_drain = damage * 3 // 2
         if industry_drain > self.resources['industry']:
@@ -363,7 +363,7 @@ class Player(Country):
                          - randint(-2, 5)
                          - self.__relationships__[ally_target_key] // 2)
         # This may change
-        if response_calc > 42:
+        if response_calc > 30:
             print('{0} agrees to attack {1}.'.format(ally.name,
                                                      target.name))
         else:
@@ -371,7 +371,7 @@ class Player(Country):
                                                       target.name))
             return
 
-        damage = int(lognormvariate(2, 0.4))
+        damage = int(lognormvariate(2.4, 0.4))
         industry_drain = damage * 3 // 4
         self.resources['industry'] = max(0, self.resources['industry']
                                          - industry_drain)

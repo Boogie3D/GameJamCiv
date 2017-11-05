@@ -282,7 +282,7 @@ class Computer(Country):
                                                           target.name))
                 return
 
-        damage = int(lognormvariate(2, 0.4))
+        damage = int(lognormvariate(2.4, 0.4))
         industry_drain = damage * 3 // 4
         self.resources['industry'] = max(0, self.resources['industry']
                                          - industry_drain)
