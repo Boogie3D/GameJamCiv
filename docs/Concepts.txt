@@ -60,6 +60,7 @@ Actions:
 - Diplomacy
 - Attack
 - Gain extra resources
+- Charity
 - See status (until there are graphics)
 - Quit
 

@@ -8,12 +8,14 @@ class Country:
     'Base class for countries.'
     count = 4
     relationships = init.init_relationships()
+    names = []
 
     def __init__(self, name, identity):
         "Initialize country's resources."
         self.name = name
         self.identity = identity
         self.resources = init.init_resources()
+        self.names.append(name)
 
     def attack(self, target):
         'Country attacks another country.'
@@ -225,17 +227,122 @@ class Country:
 
 class Player(Country):
     'Class for the player country.'
-    def take_turn(self):
+    def take_turn(self, countries):
         'Player takes his/her turn.'
-        pass
+        pop_gain = random.randint(1, 3) * (-1 if self.resources['food'] < 10 else 1)
+        food_gain = random.randint(1, 4)
+        industry_gain = random.randint(1, 3)
+        self.resources['population'] += pop_gain
+        self.resources['food'] += food_gain
+        self.resources['industry'] += industry_gain
+        if pop_gain > 0:
+            print('You gain {0} thousand people.'.format(pop_gain))
+        else:
+            print('You lose {0} thousand people.'.format(-pop_gain))
+            if self.resources['population'] <= 0:
+                return 'dead'
+        print('You gain {0} thousand tons of food.'.format(food_gain))
+        print('You gain {0} thousand tons of industrial resources.'.format(industry_gain))
+        print('What will you do?')
+        while True:
+            print('(1) Trade')
+            print('(2) Diplomacy')
+            print('(3) Gather Resources')
+            print('(4) Charity')
+            print('(5) Attack')
+            print('(6) Dual Attack')
+            print('(7) Show Status')
+            print('(8) Quit')
+            player_input = input('>> ')
+            if player_input in ('1', '2', '3', '4', '5', '6', '7', '8'):
+                break
+            print('Invalid choice.')
+        if player_input == '1':
+            while True:
+                print('Who will you trade with?')
+                gameutils.print_countries(self)
+                player_input = input('>> ')
+                if player_input in ('1', '2', '3', '4'):
+                    break
+                print('Invalid choice.')
+            country_choice = countries[int(player_input)]
+            self.trade(country_choice)
+            if self.relationships[gameutils.identity_key(self, country_choice)] > 100:
+                self.relationships[gameutils.identity_key(self, country_choice)] = 100
+            elif self.relationships[gameutils.identity_key(self, country_choice)] < 0:
+                self.relationships[gameutils.identity_key(self, country_choice)] = 0
+
+        elif player_input == '2':
+            while True:
+                print('Where will you send your diplomat?')
+                gameutils.print_countries(self)
+                player_input = input('>> ')
+                if player_input in ('1', '2', '3', '4'):
+                    break
+                print('Invalid choice.')
+            country_choice = countries[int(player_input)]
+            self.diplomacy(country_choice)
+            if self.relationships[gameutils.identity_key(self, country_choice)] > 100:
+                self.relationships[gameutils.identity_key(self, country_choice)] = 100
+            elif self.relationships[gameutils.identity_key(self, country_choice)] < 0:
+                self.relationships[gameutils.identity_key(self, country_choice)] = 0
+
+        elif player_input == '3':
+            self.gather()
+
+        elif player_input == '4':
+            while True:
+                print('Who will you give to?')
+                gameutils.print_countries(self)
+                player_input = input('>> ')
+                if player_input in ('1', '2', '3', '4'):
+                    break
+                print('Invalid choice.')
+            country_choice = countries[int(player_input)]
+            self.charity(country_choice)
+            if self.relationships[gameutils.identity_key(self, country_choice)] > 100:
+                self.relationships[gameutils.identity_key(self, country_choice)] = 100
+            elif self.relationships[gameutils.identity_key(self, country_choice)] < 0:
+                self.relationships[gameutils.identity_key(self, country_choice)] = 0
+        elif player_input == '5':
+            while True:
+                print('Who will you attack?')
+                gameutils.print_countries(self)
+                player_input = input('>> ')
+                if player_input in ('1', '2', '3', '4'):
+                    break
+                print('Invalid choice.')
+            country_choice = countries[int(player_input)]
+            self.attack(country_choice)
+            if self.relationships[gameutils.identity_key(self, country_choice)] > 100:
+                self.relationships[gameutils.identity_key(self, country_choice)] = 100
+            elif self.relationships[gameutils.identity_key(self, country_choice)] < 0:
+                self.relationships[gameutils.identity_key(self, country_choice)] = 0
+        elif player_input == '6':
+            allies_list = gameutils.get_allies_list(self)
+            if not allies_list:
+                print('You are alone in this world.')
+                return 'retry'
+            while True:
+                print('Who will you attack?')
+                gameutils.print_countries(self)
+                player_attack = input('>> ')
+                if player_attack in ('1', '2', '3', '4'):
+                    break
+                print('Invalid choice.')
+            country_attack = countries[int(player_attack)]
+            while True:
+                print('Who will join you?')
+                for ally in allies_list:
+                    print('({0}) {1}'.format(allies_list.index(ally), ally))
 
     def diplomacy(self, target):
         'Learn something about another country.'
         if self.relationships[gameutils.identity_key(self, target)] < 40:
-            print('{0} refused your diplomat'.format(target.name))
+            print('{0} sent your diplomat back.'.format(target.name))
             return
         learn_target = random.choice(['population', 'food', 'industry', 'allies', 'enemies'])
-        print('Your diplomat returned.')
+        print('Your diplomat returned with new information:')
         if learn_target == 'population':
             print("{0}'s population is {1} thousand.".format(target.name,
                                                              target.resources['population']))
@@ -246,9 +353,9 @@ class Player(Country):
             print('{0} has {1} thousand tons of industrial resources.'.format(
                 target.name, target.resources['industry']))
         elif learn_target == 'allies':
-            print('{0} has {1} allies.'.format(target.name, gameutils.get_allies(target)))
+            print('{0} has {1} allies.'.format(target.name, gameutils.get_allies_count(target)))
         elif learn_target == 'enemies':
-            print('{0} has {1} enemies.'.format(target.name, gameutils.get_enemies(target)))
+            print('{0} has {1} enemies.'.format(target.name, gameutils.get_enemies_count(target)))
 
     def charity(self, target):
         'Give a country a gift.'
@@ -284,7 +391,15 @@ class Player(Country):
         Player checks his/her status in the game, displaying each country's \
         disposition to the player and each country's power.
         '''
-        pass
+        print('Population: {0} thousand'.format(self.resources['population']))
+        print('Food: {0} thousand tons'.format(self.resources['food']))
+        print('Industrial Resources: {0} thousand tons'.format(self.resources['industry']))
+        print('Allies:')
+        allies_list = gameutils.get_allies_list(self)
+        for ally in allies_list:
+            print(ally.name)
+        if not allies_list:
+            print('You are alone in this world.')
 
 
 class Computer(Country):

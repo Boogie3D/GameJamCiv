@@ -21,6 +21,8 @@ def main():
     country_b = country.Computer(country_names[1], 'B')
     country_c = country.Computer(country_names[2], 'C')
     country_d = country.Computer(country_names[3], 'D')
+    all_players = [player, country_a, country_b, country_c, country_d]
+    current = player
     # Game should start here
 
     return 0
