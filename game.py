@@ -21,7 +21,6 @@ def main():
     country_b = country.Computer(country_names[1], 'B')
     country_c = country.Computer(country_names[2], 'C')
     country_d = country.Computer(country_names[3], 'D')
-    del country_names
     # Game should start here
 
     return 0

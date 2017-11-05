@@ -83,10 +83,24 @@ Dual Attack: Propose a dual attack with an allied country on another
 country.
 
 Gather: Gather additional resources.
+''')
+
+    input('<Press Enter to continue>')
+
+    print('''
+The following actions are unique to the player:
 
 Check Status: List the number of resources owned and the countries
-that are allied with you. (Unique to the player)
+that are allied with you.
 
+Diplomacy: Send a diplomat to learn something about a country.
+
+Charity: Send a country a gift.
+''')
+
+    input('<Press Enter to continue>')
+
+    print('''
 To win, become allies with more than half of the remaining
 countries.
 ''')
