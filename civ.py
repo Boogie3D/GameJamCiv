@@ -18,7 +18,7 @@ def main():
     country_names = init_names()
     print('')
     # Initalize countries and player
-    player = countryplayer.Player('You', 'P')
+    player = countryplayer.Player('you', 'P')
     country_a = countrycpu.Computer(country_names[0], 'A')
     country_b = countrycpu.Computer(country_names[1], 'B')
     country_c = countrycpu.Computer(country_names[2], 'C')
@@ -50,14 +50,16 @@ def main():
             if active != player and status == 'dead':
                 active.die()
             input('<Press Enter to continue>')
-    input('<Press Enter to continue>')
+            print('')
+    if status != 'quit':
+        input('<Press Enter to continue>')
     return 0
 
 def welcome():
     'Displays a welcome message and the game instructions.'
 
     print('''
-Welcome to GAME!
+Welcome to Kid Deyer's NOT Civilization: An Orignal Game (Do Not Steal)!
 
 You are the leader of a great country in a tiny world.
 There are only four other countries on this vicious little planet.
@@ -118,11 +120,20 @@ countries.
 
 def win():
     'Subroutines for winning a game'
-    pass
+    print('''
+What a humanitarian! You've united half the world!
+
+Congratulations! You win!
+''')
 
 def lose():
     'Subroutines for losing a game'
-    pass
+    print('''
+Your time has run out. Your towns lay empty, your nation is a wasteland.
+All that remains is the charred and starving bodies of your former populace.
+
+Sorry! You lose!
+''')
 
 if __name__ == '__main__':
     exit(main())

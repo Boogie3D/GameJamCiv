@@ -17,8 +17,10 @@ class Player(Country):
                     return 'dead'
             print('You gain {0} thousand tons of food.'.format(gains['food']))
             print('You gain {0} thousand tons of industry resources.'.format(gains['industry']))
-        print('What will you do?')
         while True:
+            print('')
+            print('What will you do?')
+            print('')
             print('(1) Trade')
             print('(2) Diplomacy')
             print('(3) Gather Resources')
@@ -27,10 +29,12 @@ class Player(Country):
             print('(6) Dual Attack')
             print('(7) Show Status')
             print('(8) Quit')
+            print('')
             player_input = input('>> ')
             if player_input in ('1', '2', '3', '4', '5', '6', '7', '8'):
                 break
             print('Invalid choice.')
+        print('')
         # Trade
         if player_input == '1':
             while True:
@@ -54,7 +58,7 @@ class Player(Country):
                 print('Where will you send your diplomat?')
                 self.__print_countries__()
                 try:
-                    player_input = int(input('>> '))
+                    player_input = int(input('>> ')) - 1
                 except ValueError:
                     print('Invalid input.')
                     continue
@@ -74,7 +78,7 @@ class Player(Country):
                 print('Who will you give to?')
                 self.__print_countries__()
                 try:
-                    player_input = int(input('>> '))
+                    player_input = int(input('>> ')) - 1
                 except ValueError:
                     print('Invalid input.')
                     continue
@@ -87,7 +91,7 @@ class Player(Country):
             self.__relationship_bound__(country_choice)
         # Attack
         elif player_input == '5':
-            if self.resources['industry'] < 20:
+            if self.resources['industry'] < 10:
                 print('Not enough industrial resources.')
                 return 'retry'
             while True:
@@ -113,11 +117,11 @@ class Player(Country):
                 print('Who will you attack?')
                 self.__print_countries__()
                 try:
-                    player_target = int(input('>> '))
+                    player_target = int(input('>> ')) - 1
                 except ValueError:
                     print('Invalid input.')
                     continue
-                if player_target in range(1, self.__comp_count__):
+                if player_target in range(self.__comp_count__):
                     break
                 print('Invalid choice.')
             country_list = [c for c in sorted(list(self.__countries__.keys()))
@@ -186,10 +190,10 @@ class Player(Country):
                 break
             print('Invalid quantity.')
 
-        print('What do you want in return?')
-        print('(1) Food')
-        print('(2) Indusrial Resources')
         while True:
+            print('What do you want in return?')
+            print('(1) Food')
+            print('(2) Industrial Resources')
             try:
                 rec_input = int(input('>> '))
             except ValueError:
@@ -199,8 +203,8 @@ class Player(Country):
                 rec_type = types[rec_input - 1]
                 break
             print('Invalid choice.')
-        print('How much?')
         while True:
+            print('How much?')
             try:
                 rec_quant = int(input('>> '))
             except ValueError:
@@ -227,7 +231,16 @@ class Player(Country):
         'Learn something about another country.'
         print('You sent your diplomat to {0}.'.format(target.name))
         if self.__relationships__[identity_key(self, target)] < randint(25, 40):
-            print('{0} sent your diplomat back.'.format(target.name))
+            self.__relationships__[identity_key(self, target)] -= 1
+            statement = [
+                '{0} sent your diplomat back.'.format(target.name),
+                '{0} ordered the diplomat away.'.format(target.name),
+                'He mysteriously disappeared.',
+                'He got lynched.',
+                'She defected to {0}.'.format(target.name),
+                'She was never seen again.'
+            ]
+            print(choice(statement))
             return
         learn_target = choice(['population', 'food', 'industry', 'allies', 'enemies'])
         print('Your diplomat returned with new information:')
@@ -288,7 +301,7 @@ class Player(Country):
         print('{0} sends its regards.'.format(target.name))
         self.resources[send_type] -= send_quant
         target.resources[send_type] += send_quant
-        self.__relationships__[identity_key(self, target)] += send_quant // 4
+        self.__relationships__[identity_key(self, target)] += max(1, send_quant // 4)
 
     def attack(self, target):
         'Country attacks another country.'
@@ -389,6 +402,7 @@ class Player(Country):
         Player checks his/her status in the game, displaying each country's
         disposition to the player and each country's power.
         '''
+        print('')
         print('Population: {0} thousand'.format(self.resources['population']))
         print('Food: {0} thousand tons'.format(self.resources['food']))
         print('Industrial Resources: {0} thousand tons'.format(self.resources['industry']))

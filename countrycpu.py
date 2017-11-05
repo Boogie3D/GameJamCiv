@@ -37,16 +37,18 @@ class Computer(Country):
         for _ in range(4 - enemies_count):
             choices.append('trade')
             choices.append('trade')
-            choices.append('diplomacy')
+            choices.append('charity')
         if allies_count > 0:
             choices.append('trade')
+            choices.append('trade')
+            choices.append('diplomacy')
             choices.append('diplomacy')
         if sum(self.__countries__['P'].resources.values()) > 150:
             choices.append('trade')
             choices.append('attack')
-        if allies_list > 0 and enemies_list > 0:
+        if allies_count > 0 and enemies_count > 0:
             choices.append('dual attack')
-        if allies_list > 1 and enemies_list > 1:
+        if allies_count > 1 and enemies_count > 1:
             choices.append('dual attack')
         if self.resources['food'] < 30 or self.resources['industry'] < 30:
             choices.append('gather')
@@ -56,7 +58,7 @@ class Computer(Country):
             choices.append('gather')
             choices.append('gather')
 
-        countries_list = self.__countries__.values()
+        countries_list = sorted(list(self.__countries__.values()))
         action = choice(choices)
 
         if action == 'trade':
@@ -78,7 +80,7 @@ class Computer(Country):
         if action == 'gather':
             self.gather()
         if action == 'attack':
-            if self.resources['industry'] < 20:
+            if self.resources['industry'] < 10:
                 return 'retry'
             attack_list = [c for c in countries_list if c.name not in allies_list
                            and c.name != self.name]
@@ -102,7 +104,7 @@ class Computer(Country):
         send_type = choice(types)
         send_max = (self.resources[send_type] + 1) * 3 // 5
         rec_type = choice(types)
-        rec_max = (target.resoures[rec_type] + 1) * 4 // 5
+        rec_max = (target.resources[rec_type] + 1) * 4 // 5
         self_target_key = identity_key(self, target)
 
         send_quant = randint(1, send_max)
@@ -145,18 +147,32 @@ class Computer(Country):
         'Learn something about another country.'
         print('{0} sent a diplomat to {1}.'.format(self.name, target.name))
         if self.__relationships__[identity_key(self, target)] < 35:
-            print("{0} sent {1}'s diplomat back.".format(target.name, self.name))
+            statement = [
+                '{0} ordered the diplomat away.'.format(target.name),
+                'He mysteriously disappeared.',
+                'He got lynched.'
+                'She defected to {0}.'.format(target.name),
+                'She was never seen again.'
+            ]
+            print(choice(statement))
+            self.__relationships__[identity_key(self, target)] -= 1
             return
         self_target_key = identity_key(self, target)
         self.__relationships__[self_target_key] += 3
 
     def charity(self, target):
         'Country gives to another country.'
-        pass
+        print('{0} gave a gift to {1}.'.format(self.name, target.name))
+        types = ['food', 'industry']
+        send_type = choice(types)
+        send_quant = randint(1, self.resources[send_type] // 3)
+        self.resources[send_type] -= send_quant
+        target.resources[send_type] += send_quant
+        self.__relationships__[identity_key(self, target)] += max(1, send_quant // 4)
 
     def gather(self):
         'Country gathers resources.'
-        print('{0} gathers resources.'.format(self.name))
+        print('{0} gathered resources.'.format(self.name))
         gather_food = randint(10, 30)
         gather_industry = randint(5, 20)
         self.resources['food'] += gather_food
@@ -164,10 +180,7 @@ class Computer(Country):
 
     def attack(self, target):
         'Country attacks another country.'
-        if self.identity == 'P':
-            print('You are attacking {1}!'.format(target.name))
-        else:
-            print('{0} is attacking {1}!'.format(self.name, target.name))
+        print('{0} is attacking {1}!'.format(self.name, target.name))
         seed()
         # Damage mostly 1-3, theoretical range is 0-12
         damage = int(lognormvariate(1, 0.5))
@@ -201,7 +214,7 @@ class Computer(Country):
             print(choice(statement), end=' ')
             print('{0} thousand were killed!'.format(damage))
         else:
-            print('A devastating nuclear attack unleashes hell!')
+            print('A devastating nuclear attack devastated {0}'.format(target.name))
             print('{0} thousand were wiped out!!!'.format(damage))
         if self.identity == 'P':
             print('Your industrial resources are now {0} thousand tons.'.format(
