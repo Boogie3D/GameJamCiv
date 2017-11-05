@@ -118,11 +118,11 @@ class Computer(Country):
 
         if target.identity == 'P':
             while True:
-                print('{0} wants to trade {1} tons of {2} for {3} tons of {4}.'.format(self.name,
-                                                                                       send_quant,
-                                                                                       send_type,
-                                                                                       rec_quant,
-                                                                                       rec_type))
+                print('{0} wants to trade {1} tons of {2} resources'.format(self.name,
+                                                                            send_quant,
+                                                                            send_type),
+                      end=' ')
+                print('for {0} tons of {1} resources.'.format(rec_quant, rec_type))
                 response = input('Do you accept this trade [y,N]? ').lower()
                 if response in ('y', 'yes', 'n', 'no', ''):
                     if response in ('y', 'yes'):

@@ -137,12 +137,12 @@ class Player(Country):
                 for ally in allies_list:
                     print('({0}) {1}'.format(allies_list.index(ally) + 1, ally))
                 try:
-                    player_ally = int(input('>> '))
+                    player_ally = int(input('>> ')) - 1
                 except ValueError:
                     print('Invalid input.')
                     continue
                 print('Invalid choice.')
-            ally_name = allies_list[player_ally - 1]
+            ally_name = allies_list[player_ally]
             for country_value in self.__countries__.values():
                 if ally_name == country_value.name:
                     country_ally = country_value

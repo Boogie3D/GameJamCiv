@@ -27,7 +27,9 @@ def main():
     # Game should start here
     player.check_status()
     running = True
+    month = 0
     while running:
+        print('Month {0}: '.format(month))
         for active in countries:
             status = 'init'
             while True:
@@ -47,10 +49,18 @@ def main():
                 win()
                 running = False
                 break
-            if active != player and status == 'dead':
+            if status == 'dead':
+                print('The nation of {0} has perished'.format(active.name))
                 active.die()
+                del countries[countries.index(active)]
+            for cpu in countries[1:]:
+                if cpu.resources['population'] <= 0:
+                    print('The nation of {0} has perished.'.format(cpu.name))
+                    cpu.die()
+                    del countries[countries.index(cpu)]
             input('<Press Enter to continue>')
             print('')
+        month += 1
     if status != 'quit':
         input('<Press Enter to continue>')
     return 0
