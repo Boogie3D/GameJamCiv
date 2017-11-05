@@ -115,8 +115,8 @@ class Player(Country):
                 print('Not enough industrial resources.')
                 return 'retry'
             allies_list = self.__get_allies_list__()
-            if not allies_list:
-                print('You are alone in this world.')
+            if len(allies_list) < 2:
+                print('You do not have enough allies.')
                 return 'retry'
             while True:
                 print('Who will you attack?')
@@ -358,9 +358,8 @@ class Player(Country):
         ally_target_key = identity_key(ally, target)
         # Calculate ally response
         response_calc = (self.__relationships__[self_ally_key]
-                         - randint(0, 5)
-                         - self.__relationships__[ally_target_key]
-                         // 2)
+                         - randint(-2, 5)
+                         - self.__relationships__[ally_target_key] // 2)
         # This may change
         if response_calc > 42:
             print('{0} agrees to attack {1}.'.format(ally.name,

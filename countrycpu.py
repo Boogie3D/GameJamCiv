@@ -95,8 +95,15 @@ class Computer(Country):
         if action == 'dual attack':
             if self.resources['industry'] < 30:
                 return 'retry'
-            ally_target = choice(self.__get_allies_list__())
-            attack_target = choice(self.__get_enemies_list__())
+            if len(self.__get_allies_list__()) < 2:
+                return 'retry'
+            ally_name = choice(self.__get_allies_list__())
+            attack_name = choice(self.__get_enemies_list__())
+            for key, value in self.__countries__.items():
+                if ally_name == value.name:
+                    ally_target = key
+                if attack_name == value.name:
+                    attack_target = key
             self.dual_attack(ally_target, attack_target)
             self.__relationship_bound__(ally_target)
             self.__relationship_bound__(attack_target)
@@ -151,7 +158,21 @@ class Computer(Country):
     def diplomacy(self, target):
         'Learn something about another country.'
         print('{0} sent a diplomat to {1}.'.format(self.name, target.name))
-        if self.__relationships__[identity_key(self, target)] < 35:
+        self_target_key = identity_key(self, target)
+        if target.identity == 'P':
+            while True:
+                response = input('Do you accept the diplomat [y,N]? ').lower()
+                if response in ('y', 'yes', 'n', 'no', ''):
+                    break
+                print('Invalid response.')
+            if response in ('y', 'yes'):
+                print('You accepted the diplomat.')
+                self.__relationships__[self_target_key] += 3
+            else:
+                print('You rejected the diplomat.')
+                self.__relationships__[identity_key(self, target)] -= 1
+            return
+        if self.__relationships__[identity_key(self, target)] < randint(35, 45):
             statement = [
                 '{0} ordered the diplomat away.'.format(target.name),
                 'He mysteriously disappeared.',
@@ -162,7 +183,6 @@ class Computer(Country):
             print(choice(statement))
             self.__relationships__[identity_key(self, target)] -= 1
             return
-        self_target_key = identity_key(self, target)
         self.__relationships__[self_target_key] += 3
 
     def charity(self, target):
