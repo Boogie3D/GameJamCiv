@@ -95,15 +95,15 @@ class Computer(Country):
         if action == 'dual attack':
             if self.resources['industry'] < 30:
                 return 'retry'
-            if not self.__get_allies_list__():
+            if not self.__get_allies_list__() or not self.__get_enemies_list__():
                 return 'retry'
             ally_name = choice(self.__get_allies_list__())
             attack_name = choice(self.__get_enemies_list__())
             for key, value in self.__countries__.items():
                 if ally_name == value.name:
-                    ally_target = key
+                    ally_target = value
                 if attack_name == value.name:
-                    attack_target = key
+                    attack_target = value
             self.dual_attack(ally_target, attack_target)
             self.__relationship_bound__(ally_target)
             self.__relationship_bound__(attack_target)
