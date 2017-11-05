@@ -30,95 +30,29 @@ def init_relationships():
     relationships = {}
     # Computer relationships
     for comb in combinations('ABCD', 2):
-        relationships[comb] = randint(25, 75)
+        relationships[''.join(comb)] = randint(25, 75)
     # Player-Computer relationships
     while True:
-        for let in 'ABCD':
-            relationships[let + 'P'] = randint(25, 75)
+        cheese_count = 0
+        for letter in 'ABCD':
+            relationships[letter + 'P'] = randint(25, 75)
             # Count the number of initial allies
-            # Retry initialization if the win condition is
-            # prematurely satisfied
-            ally_count = 0
-            ally_count += (relationships[let + 'P'] > 60)
-        if ally_count < 3:
+            # Retry initialization if the game is too easy
+            cheese_count += (relationships[letter + 'P'] > 55)
+        if cheese_count < 3:
             break
     return relationships
 
-def welcome():
-    'Displays a welcome message and the game instructions.'
-
-    print('''
-Welcome to GAME!
-
-You are the leader of a great country in a tiny world.
-There are only four other countries on this vicious little planet.
-You may become allies or enemies with any of these countries.
-
-Each country has a number of resources:
-
-Population: The manpower of a country.
-
-Food: Substinence for a country's people. If food runs low, the
-population will begin to dwindle.
-
-Industry: The strength of a country's industry determines whether
-it is capable of attacking or defending itself.
-
-Resources may passively increase or decrease at the beginning of
-each round.
-If a country's population drops to 0, it is permanently destroyed.
-''')
-
-    input('<Press Enter to continue>')
-
-    print('''
-Each surviving country will take a turn and may perform one of the
-following actions:
-
-Trade: Trade resources with another country.
-
-Attack: Attack another country.
-
-Dual Attack: Propose a dual attack with an allied country on another
-country.
-
-Gather: Gather additional resources.
-''')
-
-    input('<Press Enter to continue>')
-
-    print('''
-The following actions are unique to the player:
-
-Check Status: List the number of resources owned and the countries
-that are allied with you.
-
-Diplomacy: Send a diplomat to learn something about a country.
-
-Charity: Send a country a gift.
-''')
-
-    input('<Press Enter to continue>')
-
-    print('''
-To win, become allies with more than half of the remaining
-countries.
-''')
-
-    input('<Press Enter to continue>')
-
-    print('')
-
-def ask_names():
+def init_names():
     'Asks the player to enter names for the other countries'
     names = []
     numeral = ['first', 'second', 'third', 'fourth']
     for index in range(4):
         while True:
             names.append(input("Enter the {0} country's name: ".format(numeral[index])))
-            if names[index] != '':
+            # Try again if invalid string
+            if names[index] != '' and names[index] != 'You':
                 break
-            # Try again if empty string
             del names[index]
             print('Please try again.')
     return names

@@ -10,9 +10,6 @@ Countries:
 There are currently at least 5 countries.
 Alignments are randomized.
 Resources are randomized.
-Some countries have advantageous resources or intimidating weapons.
-Leaders may or may not be people (like Ybrik).
-One country is actually chaotic evil ?
 
 Resources:
 Need resources to perform some actions such as attacking countries.
@@ -70,11 +67,8 @@ countries like/hate you.
 
 Statistics:
 Friendships (based off friendship points)
-Awareness (based off power)
 Resources (gained passively, by gathering, or by trading)
-Power (scaled sum of all resources, mutually known)
-Trade willingness ?
-Ghandi tendency ?
+Trade willingness
 
 Technical Details:
 Plays kind of like a board game (there are turns).
