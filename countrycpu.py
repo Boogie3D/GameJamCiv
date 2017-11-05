@@ -60,7 +60,7 @@ class Computer(Country):
 
         countries_list = sorted(list(self.__countries__.values()))
         action = choice(choices)
-
+        # Trade
         if action == 'trade':
             if self.resources['food'] < 10 or self.resources['industry'] < 10:
                 return 'retry'
@@ -69,16 +69,20 @@ class Computer(Country):
             if not trade_list:
                 return 'retry'
             self.trade(choice(trade_list))
+        # Diplomacy
         if action == 'diplomacy':
             diplomacy_list = [c for c in countries_list if c.name != self.name]
             self.diplomacy(choice(diplomacy_list))
+        # Charity
         if action == 'charity':
             charity_list = [c for c in countries_list if c.name != self.name]
             if self.resources['food'] < 10 or self.resources['industry'] < 10:
                 return 'retry'
             self.charity(choice(charity_list))
+        # Gather
         if action == 'gather':
             self.gather()
+        # Attack
         if action == 'attack':
             if self.resources['industry'] < 10:
                 return 'retry'
@@ -87,6 +91,7 @@ class Computer(Country):
             attack_target = choice(self.__get_enemies_list__())
             self.attack(attack_target)
             self.__relationship_bound__(attack_target)
+        # Dual Attack
         if action == 'dual attack':
             if self.resources['industry'] < 30:
                 return 'retry'
