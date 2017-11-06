@@ -297,14 +297,14 @@ class Computer(Country):
             print('Somehow, you both failed to kill anyone!')
         elif damage <= 4:
             statement = [
-                'Bombs rain down from above!'
+                'Bombs rain down from above!',
                 'Soldiers storm the mainland!'
             ]
             print(choice(statement))
             print('{0} thousand were killed!'.format(damage))
         elif damage <= 14:
             statement = [
-                'Tactile missiles strike from two sides!'
+                'Tactile missiles strike from two sides!',
                 'Soldiers overwhelm {0}, wreaking havoc!'.format(target.name)
             ]
             print(choice(statement))

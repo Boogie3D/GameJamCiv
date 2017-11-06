@@ -1,5 +1,5 @@
 Made by:
 
-Steven Anaya - Lead programmer, lead designer
-Jon - Bug tester, programmer
-Lexi - Graphic artist
+Steven Anaya - Lead programmer, designer
+Jon - Bug tester, programmer, designer
+Lexi - Graphic artist, designer

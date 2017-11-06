@@ -50,7 +50,7 @@ class Country:
 
     def __passive_gather__(self):
         pop_gain = randint(1, 3)
-        if self.resources['food'] < 10:
+        if self.resources['food'] < 20:
             pop_gain = -pop_gain - randint(3, 5)
         food_gain = randint(1, 7)
         industry_gain = randint(3, 10)

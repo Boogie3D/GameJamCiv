@@ -75,7 +75,7 @@ def welcome():
     'Displays a welcome message and the game instructions.'
 
     print('''
-Welcome to Kid Deyer's NOT Civilization: An Orignal Game (Do Not Steal)!
+Welcome to Kid Deyer's Societies: An Orignal Game (Do Not Steal)!
 
 You are the leader of a great country in a tiny world.
 There are only four other countries on this vicious little planet.
