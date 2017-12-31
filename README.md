@@ -22,7 +22,7 @@ Currently, if another country chooses to perform a "Dual Attack" without any all
 raised. There is no plan to fix this.
 
 ## Style Issues ##
-The answer to the following concerns about the coding style is simply that the code was written in a total of 37 hours from
+The answer to the following concerns about the coding style is simply that the code was written in a total of 39 hours from
 scratch mostly by one person; there was no time to try to significantly improve the style, let alone implement graphics,
 after the initial program structure was decided.
 ### Concerns: ###
