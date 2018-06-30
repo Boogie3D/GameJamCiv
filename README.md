@@ -1,16 +1,13 @@
 # Kid Deyer's Societies: Readme #
 
-### To run the game, execute the file civ.py in a Python 3.x shell. ###
+### To play the game, run civ.py in Python 3.X. ###
 
 ## Purpose ##
-This is a text-based game inspired by Sid Meier's Civilization. It was written entirely in
-Python 3 for a 48-hour Game Jam--the major theme of which was "Interconnected Worlds" with a minor theme of "Problems that can
-be solved with violence but shouldn't be"--hosted by the New Mexico Tech ACM Chapter. As the game was made during a Game Jam, no
-further updates are planned.
+This is a text-based game inspired by Sid Meier's Civilization. It was written entirely in Python 3 for a 48-hour Game Jam--the major theme of which was "Interconnected Worlds" with a minor theme of "Problems that can be solved with violence but probably shouldn't be"--hosted by the New Mexico Tech ACM Chapter. As the game was made by 3 undergraduates during a Game Jam, the code is markedly unoptimized and un-Pythonic. No further updates are planned.
 
 ## Graphics ##
 The game features no graphics, although originally graphics were planned to be implemented with Pygame. Some early pixel art may
-be found in the 'concept_art' directory. The game is text-based and is played directly in a Python 3.x shell.
+be found in the 'concept_art' directory. The game is text-based and is played directly in an interactive shell.
 
 ## Gameplay ##
 The game revolves around the relations of 5 "countries," one of which is controlled by the player. The objective of the game is
